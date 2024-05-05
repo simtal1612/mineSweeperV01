@@ -11,68 +11,82 @@ var gGame
 
 function onInit() {       
     gBoard = buildBoard()
+     setMinesNegsCount(gBoard)
     renderBoard(gBoard)
+   
+  
+   
+    
+
 }
 
 function buildBoard() {
-    const size = 4;
-    const gBoard = [];
+    const size = 4
+    const board = []
 
     for (var i = 0; i < size; i++) {
-        gBoard[i] = []
+        board[i] = []
         for (var j = 0; j < size; j++) {
-            gBoard[i][j] = {
+            board[i][j] = {
                 minesAroundCount: 0,
                 isShown: false,
                 isMine: false,
-                isMarked: false
+                isMarked: false,
+                cellContent: ''
             }
         }
 
 
     }
-    gBoard[1][1] = {
+    board[1][1] = {
+        minesAroundCount: 0,
+        isShown: true,
+        isMine: true,
+        isMarked: false,
+        cellContent: MINE
+    }
+    board[2][2] = {
         minesAroundCount: 0,
         isShown: false,
         isMine: true,
-        isMarked: false
-    }
-    gBoard[2][2] = {
-        minesAroundCount: 0,
-        isShown: false,
-        isMine: true,
-        isMarked: false
+        isMarked: false,
+        cellContent: MINE
     }
 
 
-    return gBoard
+    return board
 }
+
+
 
 function setMinesNegsCount(board) {
-  
-    const ROWS = LEVEL[0]
-    const COLS = LEVEL[0]
-    for(var i = 0; i < ROWS; i++){
-        for(var j = 0; i < COLS; i++){
-         board[i][j].minesAroundCount = countNeighborsMines(board, i, j)
+    const ROWS = board.length;
+    const COLS = board[0].length;
+    for (var i = 0; i < ROWS; i++) {
+        for (var j = 0; j < COLS; j++) {
+            board[i][j].minesAroundCount = countNeighborsMines(board, i, j);
         }
     }
-
 }
-function countNeighborsMines(board,rows,cols){
-    const ROWS = LEVEL[0]
-    const COLS = LEVEL[0]
+
+
+function countNeighborsMines(board, row, cols) {
+    const ROWS = board.length
+    const COLS = board[0].length
     var minesAroundCounter = 0
-    for (var i = rows - 1; i <= ROWS + 1; i++) {
+
+    for (var i = row - 1; i <= row + 1; i++) {
         if (i < 0 || i === ROWS)
             continue
 
         for (var j = cols - 1; j <= cols + 1; j++) {
-            if (j < 0 || j === COLS || i === ROWS && j === COLS)
+            if (j < 0 || j === COLS || (i === row && j === cols))
                 continue
 
             if (board[i][j].isMine) {
                 minesAroundCounter++
+                console.log('minesAroundCounter : ' , minesAroundCounter)
+
             }
         }
     }
@@ -94,10 +108,14 @@ function renderBoard(board) {
             var cellClass = getClassName({ i, j })
 
             var cellContent = ''
-
+            
             if (currCell.isMine && currCell.isShown) {
                 cellContent = '💣'
+            }else {
+                cellContent = currCell.minesAroundCount || ''
+              
             }
+
 
             strHTML += `<td class="cell ${cellClass}">${cellContent}</td>`
 
@@ -106,6 +124,8 @@ function renderBoard(board) {
     }
 
     elBoard.innerHTML = strHTML
+
+
 }
 
 function onCellClicked(elCell, i, j) {

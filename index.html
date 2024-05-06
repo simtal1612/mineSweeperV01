@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,21 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <h1>MineSweeper</h1>
+<div class="actions-container" >
+    <span class="timer">Seconds: 0 </span> <span id="lives"> LIFE : 3 </span>
+    <button onclick="handleSmileyButtonClick()">  😃  </button>
+</div>
 
 <body onload="onInit()">
     <table class="board-container">
     </table>
     <script src="main.js"></script>
+    <script src="utils.js"></script>
 </body>
+
+<footer>
+    <p>Powerd by: Tal Simoni</p>
+</footer>
+
+
 </html>

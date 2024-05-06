@@ -1,0 +1,76 @@
+h1{
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+ }
+ .body {
+ font-family: Arial, Helvetica, sans-serif;
+ font-weight: bold;
+ text-align: center;
+ 
+ 
+ }
+ 
+ table{
+    width: 400px;
+    height: 400px;
+    border: 1px solid darkcyan;
+    background-color:lightgrey;
+    margin: 0 auto;
+    
+  
+ 
+ }
+ 
+ .cell {
+   width: 30px;
+   height: 30px;
+   transition: 0.2s;
+   background: lightslategray;
+   cursor: pointer;
+   text-align: center;
+}
+
+
+ .clicked{
+    width: 10px;
+    height: 10px;
+    border: 1px solid rgb(139, 88, 0);
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+ 
+ }
+ 
+ .mine{
+   background-color: blanchedalmond;
+   text-align: center;
+ 
+ 
+ }
+ 
+ footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+ }
+ 
+ p{
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+ }
+ 
+ .actions-container{
+     background-color: lightslategrey;
+     height: 30px;
+     text-align: center;
+     margin-bottom: 20px;
+     
+ }
+ 
+ span{
+     text-align: center;
+ }
+

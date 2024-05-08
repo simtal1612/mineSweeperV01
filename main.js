@@ -4,6 +4,7 @@ const LEVEL = [4, 8, 12]
 const MINES = [2, 14, 32]
 const MINE = '💣'
 const FLAG = '🚩'
+const LIFE = '❤'
 var gBoard
 var gLevel
 var gGame
@@ -11,6 +12,9 @@ var gDate
 var gTimer
 var gFirstClick = true
 var gLives = 3
+var gSize = 4
+var gMines = 2
+var gHint = false
 
 
 
@@ -22,19 +26,20 @@ function onInit() {
         secsPassed: 0
     }
     gBoard = buildBoard()
-    addMines(14)
+    addMines(gMines)
     setMinesNegsCount(gBoard)
     renderBoard(gBoard)
+    gLives = 3
 
 }
 
 function buildBoard() {
-    const size = 8
+    // var gSize = 4
     const board = []
 
-    for (var i = 0; i < size; i++) {
+    for (var i = 0; i < gSize; i++) {
         board[i] = []
-        for (var j = 0; j < size; j++) {
+        for (var j = 0; j < gSize; j++) {
             board[i][j] = {
                 minesAroundCount: 0,
                 isShown: false,
@@ -53,11 +58,11 @@ function buildBoard() {
 
 
 function setMinesNegsCount(board) {
-    const ROWS = board.length;
-    const COLS = board[0].length;
+    const ROWS = board.length
+    const COLS = board[0].length
     for (var i = 0; i < ROWS; i++) {
         for (var j = 0; j < COLS; j++) {
-            board[i][j].minesAroundCount = countNeighborsMines(board, i, j);
+            board[i][j].minesAroundCount = countNeighborsMines(board, i, j)
         }
     }
 }
@@ -140,7 +145,7 @@ function onCellClicked(elCell, i, j) {
     console.log('hi its me ', i, j)
     elCell.classList.add('clicked')
     if (currCell.isMine) {
-        gLives--
+        handleMineClick()
         if (gLives === 0) {
             gameOverMine()
         }
@@ -187,7 +192,7 @@ function gameOverMine() {
     gGame.isOn = false
     console.log('game over')
     clearInterval(gTimer)
-    const smileyButton = document.querySelector('button');
+    const smileyButton = document.querySelector('.smiley button')
     smileyButton.textContent = '😢'
 
 
@@ -221,7 +226,7 @@ function checkGameOver() {
     if (markedMinesCount === totalMines && revealedNonMinedCount === totalNonMinedCells) {
         console.log('Congratulations, you won!')
         clearInterval(gTimer)
-        const smileyButton = document.querySelector('button');
+        const smileyButton = document.querySelector('button')
         smileyButton.textContent = '😎'
         gGame.isOn = false
     }
@@ -233,8 +238,8 @@ function checkGameOver() {
 
 function addMines(minesAmount) {
     for (var i = 0; i < minesAmount; i++) {
-        var randomI = getRandomIntInclusive(0, LEVEL[1] - 1)
-        var randomJ = getRandomIntInclusive(0, LEVEL[1] - 1)
+        var randomI = getRandomIntInclusive(0, gSize - 1)
+        var randomJ = getRandomIntInclusive(0, gSize - 1)
         gBoard[randomI][randomJ] = {
             minesAroundCount: 0,
             isShown: false,
@@ -254,17 +259,17 @@ function getClassName(position) {
 }
 
 function expandShown(board, elCell, row, col) {
-    const ROWS = board.length;
-    const COLS = board[0].length;
-    for (let r = row - 1; r <= row + 1; r++) {
-        for (let c = col - 1; c <= col + 1; c++) {
+    const ROWS = board.length
+    const COLS = board[0].length
+    for (var r = row - 1; r <= row + 1; r++) {
+        for (var c = col - 1; c <= col + 1; c++) {
             if (r >= 0 && r < ROWS && c >= 0 && c < COLS) {
-                const neighborCell = board[r][c];
+                const neighborCell = board[r][c]
                 if (!neighborCell.isShown && !neighborCell.isMarked) {
-                    neighborCell.isShown = true;
-                    renderCell(getCellElement(r, c), neighborCell);
+                    neighborCell.isShown = true
+                    renderCell(getCellElement(r, c), neighborCell)
                     if (neighborCell.minesAroundCount === 0) {
-                        expandShown(board, getCellElement(r, c), r, c);
+                        expandShown(board, getCellElement(r, c), r, c)
                     }
                 }
             }
@@ -273,13 +278,15 @@ function expandShown(board, elCell, row, col) {
 }
 
 function handleMineClick() {
+    gLives--
     updateLivesUI()
     if (gLives === 0) {
-        gameOver()
+        gameOverMine()
     }
 }
 function updateLivesUI() {
-    document.getElementById('lives').innerText = `Lives: ${gLives}`;
+    const eLlives = document.querySelector('.lives')
+    eLlives.textContent = `LIFE : ${gLives} `
 }
 function handleSmileyButtonClick() {
     resetGame()
@@ -291,14 +298,47 @@ function resetGame() {
     gGame.shownCount = 0
     gGame.markedCount = 0
     gGame.secsPassed = 0
+
     gLives = 3
     updateLivesUI()
     resetBoard()
+    setTimeZero()
     renderBoard(gBoard)
+
+
 }
 function resetBoard() {
     onInit()
     updateTime()
-    const smileyButton = document.querySelector('button');
+    const smileyButton = document.querySelector('.smiley button')
     smileyButton.textContent = '😃'
+}
+
+function onClickEasy() {
+    gSize = 4
+    gMines = 2
+    resetGame()
+
+
+}
+function onClickMedium() {
+    gSize = 8
+    gMines = 14
+    resetGame()
+}
+function onClickHard() {
+    gSize = 12
+    gMines = 32
+    resetGame()
+}
+
+function onHintClick(timeout = 1000) {
+    gHint = true
+    console.log('Hint activated!')
+
+    setTimeout(() => {
+        gHint = false
+        console.log('Hint deactivated!')
+    }, timeout)
+
 }

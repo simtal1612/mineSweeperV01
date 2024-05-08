@@ -13,8 +13,13 @@ function updateTime() {
 
     const elTimer = document.querySelector('.timer')
 
-    elTimer.innerHTML = sec
+    elTimer.innerHTML = `Seconds : ${sec}`
 }
 function getCellElement(row, col) {
     return document.querySelector(`.cell-${row}-${col}`);
+}
+
+function setTimeZero(){
+    const elTimer = document.querySelector('.timer')
+    elTimer.innerHTML = `Seconds : 0`
 }

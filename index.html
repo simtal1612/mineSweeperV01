@@ -9,12 +9,14 @@
 </head>
 <h1>MineSweeper</h1>
 <div class="actions-container">
-    <span class="timer">Seconds: 0 </span> <span class="lives"> LIFE : 3 </span>
-    <button onclick="onHintClick()">HINT</button>
-
-    <div class="smiley">
-        <button onclick="handleSmileyButtonClick()">😃</button>
+    <!-- <button class="mines-placing" onclick="minesPlacing()"> Mines Placing 💣 </button> -->
+    <button class="mines"> MINES  x 💣 </button>
+    <button class="lives"> LIFE  x3  ❤</button>
+    <button onclick="onHintClick()">HINT 💡</button>
+    <button class="dark-mode" onclick="darkMode()">Dark Mode 🌙</button>
     </div>
+
+
 </div>
 <div class="difficulties">
     <button onclick="onClickEasy()">Easy</button>
@@ -22,6 +24,9 @@
     <button onclick="onClickHard()">Hard</button>
 </div>
 
+<div class="smiley">
+    <button onclick="handleSmileyButtonClick()">😃</button>
+</div>
 
 <body onload="onInit()">
     <div class="extra-div">
@@ -30,9 +35,13 @@
         </table>
 
     </div>
-
+    <div class="timer-container">
+        <span class="timer">Seconds: 0 </span>
+    </div>
+  
     <script src="main.js"></script>
     <script src="utils.js"></script>
+    <script src="clicks.js"></script>
 </body>
 
 <footer>

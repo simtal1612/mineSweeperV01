@@ -1,26 +1,56 @@
-h1{
-   font-family: Arial, Helvetica, sans-serif;
+body.dark-mode {
+   font-family: Arial, sans-serif;
+   background-color: #222;
+   color: #ddd;
+   margin: 0;
+   padding: 0;
+}
+
+header.dark-mode {
+   background-color: #333;
+   padding: 20px;
+}
+
+.dark-mode header {
+   margin: 0;
+}
+
+.dark-mode button {
+   background-color: #555;
+   color: #fff;
+   border: none;
+   padding: 10px 20px;
+   cursor: pointer;
+}
+
+h1 {
+   font-family: "Courier New", monospace;
    text-align: center;
 }
+body{
+   background-color: lightgray;
+}
 .body {
-  margin: 0%;
-font-family: Arial, Helvetica, sans-serif;
-font-weight: bold;
-text-align: center;
+   margin: 0%;
+   font-family: Arial, Helvetica, sans-serif;
+   font-weight: bold;
+   text-align: center;
+
 
 
 }
-.extra-div{
+
+.extra-div {
    display: flex;
    justify-content: center;
    align-items: center;
 }
 
-.board-container{
+.board-container {
    display: flex;
    justify-content: center;
    align-items: center;
-   background-color:lightgray;
+   background-color: lightgray;
    padding: 20px;
    border-radius: 10px;
    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -28,28 +58,54 @@ text-align: center;
 }
 
 .cell {
-  width: 30px;
-  height: 30px;
-  transition: 0.2s;
-  background: lightslategray;
-  cursor: pointer;
-  text-align: center;
+   width: 30px;
+   height: 30px;
+   transition: 0.2s;
+   background: lightslategray;
+   cursor: pointer;
+   text-align: center;
+   border-radius:  1px;
+
+   
 }
 
 
+.cell:hover {
+   background-color: orange;
+}
+.hint-active {
+   background-color: rgb(0, 200, 255);
+}
+.hint-active:hover {
+   background-color: white;
+   
+}
 .clicked{
+   visibility: visible;
+  
+
+}
+.content{
+   content-visibility: hidden;
+
+}
+
+/* 
+.clicked {
    width: 10px;
    height: 10px;
-   border: 1px solid rgb(139, 88, 0);
+   border: 10px;
    text-align: center;
    font-family: Arial, Helvetica, sans-serif;
    transition: 0.2s;
+} */
 
-}
 
-.mine{
-  background-color: blanchedalmond;
-  text-align: center;
+
+
+.mine {
+   background-color: blanchedalmond;
+   text-align: center;
 
 
 }
@@ -64,67 +120,100 @@ footer {
    width: 100%;
 }
 
-p{
+p {
    text-align: center;
    font-family: Arial, Helvetica, sans-serif;
 }
 
-.actions-container{
-    background-color: lightslategrey;
-    height: 30px;
-    text-align: center;
-    margin-bottom: 20px;
-    display: flex; 
-    justify-content: center; 
-    
-}
-
-span{
-    text-align: center;
-}
-
-.difficulties {
-  height: 30px;
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-  height: 100%;
-  padding-bottom: 10px;
-}
-
-button{
-   cursor: pointer;
+.actions-container {
+   background-color: lightslategrey;
+   height: 30px;
    text-align: center;
-   border-radius: 5px; 
+   margin-bottom: 20px;
+   display: flex;
+   justify-content: center;
+
 }
 
 span {
-   display: inline-block; 
-   padding: 5px 10px;
-   margin: 5px; 
+   text-align: center;
+   font-family: Arial, sans-serif;
+   font-size: 20px;
+   color: #fff; 
+   background-color: #333; 
+   padding: 5px 10px; 
    border-radius: 5px; 
-   background-color: black; 
-   color: white; 
-   font-weight: bold;
-   font-size: 12px;
-   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-   transition: background-color 0.3s ease, box-shadow 0.3s ease; 
 }
-.smiley{
+
+
+.difficulties {
+   height: 30px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100%;
+   padding-bottom: 10px;
+}
+
+button {
+   cursor: pointer;
+   text-align: center;
+   border-radius: 5px;
+   border: 2px solid #e1a100;
+   color: #333;
+   font-size: 15px;
+   font-weight: bold;
+   padding: 0px 20px;
+   border-radius: 5px;
+   background-color: #ffda79;
+   font-family: "Courier New", monospace;
+}
+
+.timer {
+   font-family: "Courier New", monospace; 
+   font-size: 24px; 
+   color: #0ff; 
+   background-color: #000; 
+   padding: 8px 12px; 
+   border: 2px solid #0ff; 
+   border-radius: 5px; 
+}
+
+.smiley {
    display: flex;
    justify-content: center;
    align-items: center;
 
 
 }
+
 .smiley button {
-   background-color: #ffda79; 
-   border: 2px solid #e1a100; 
+   background-color: #ffda79;
+   border: 2px solid #e1a100;
    color: #333;
    font-size: 18px;
-   font-weight: bold; 
-   padding: 0px 20px; 
-   border-radius: 5px; 
-   cursor: pointer; 
- 
+   font-weight: bold;
+   padding: 0px 20px;
+   border-radius: 5px;
+   cursor: pointer;
+   margin-bottom: 10px;
+
+}
+
+.timer-container{
+   padding-top: 20px;
+ text-align: center;
+}
+.mines-placing{
+   cursor: pointer;
+   text-align: center;
+   border-radius: 5px;
+   border: 2px solid #e1a100;
+   color: #333;
+   font-size: 15px;
+   font-weight: bold;
+   padding: 0px 20px;
+   border-radius: 5px;
+   background-color: #ffda79;
+   font-family: "Courier New", monospace;
 }

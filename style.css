@@ -217,3 +217,56 @@ button {
    background-color: #ffda79;
    font-family: "Courier New", monospace;
 }
+
+.digit0{
+   background-color: rgba(0,0,0,0.5);
+   color: transparent
+}
+.digit1 {
+   font-size: x-large;
+   font-family: 'Courier New', Courier, monospace;
+   font-weight: bold;
+   color: rgb(21, 227, 227);
+}
+
+.digit2 {
+   font-size: x-large;
+   font-family: 'Courier New', Courier, monospace;
+   font-weight: bold;
+   color: rgb(129, 28, 77);
+}
+.digit3 {
+   font-size: x-large;
+   font-family: 'Courier New', Courier, monospace;
+   font-weight: bold;
+   color: rgb(122, 94, 116);
+}
+
+.digit4 {
+   font-size: x-large;
+   font-family: 'Courier New', Courier, monospace;
+   font-weight: bold;
+   color: rgb(231, 173, 38);
+} 
+.digit5{
+   font-size: x-large;
+   font-family: 'Courier New', Courier, monospace;
+   font-weight: bold;
+   color: rgb(137, 231, 38);
+
+}
+.digit6{
+   font-size: x-large;
+   font-family: 'Courier New', Courier, monospace;
+   font-weight: bold;
+   color: rgb(128, 38, 231);
+
+}
+
+.digitx{
+   font-size: x-large;
+   font-family: 'Brush Script MT', cursive;
+   font-weight: bold;
+   color: rgb(203, 37, 37);
+
+}

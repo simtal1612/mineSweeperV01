@@ -1,7 +1,6 @@
 'use strict'
 
-const LEVEL = [4, 8, 12]
-const MINES = [2, 14, 32]
+
 const MINE = '💣'
 const FLAG = '🚩'
 const LIFE = '❤'
@@ -18,8 +17,7 @@ var gMines = 2
 var gHintsAllowed = 3
 var gHint = false
 var gMinesCounter = gMines
-// var gManuallyMinesMode = false
-// var gManuallyMinesCounter = 2
+
 
 
 
@@ -113,18 +111,20 @@ function renderBoard(board) {
 
             var cellContent = ''
 
+            if (currCell.isMarked) {
+                cellContent = FLAG
+            }
             if (currCell.isMine && currCell.isShown) {
                 cellContent = '💣'
             } else {
                 if (currCell.isShown)
 
-                    cellContent = currCell.minesAroundCount || ''
-
-
+                    cellContent = currCell.minesAroundCount || '0'
             }
 
 
-            strHTML += `<td class="cell ${cellClass}"onclick="onCellClicked(this, ${i}, ${j})" oncontextmenu=" onCellMarked(this,event,${i},${j})">${cellContent}</td>`
+
+            strHTML += `<td class="cell ${cellClass} digit${cellContent}"onclick="onCellClicked(this, ${i}, ${j})" oncontextmenu=" onCellMarked(this,event,${i},${j})">${cellContent}</td>`
 
         }
         strHTML += '</tr>'
@@ -143,16 +143,20 @@ function renderCell(elCell, currCell) {
 
     } else {
         elCell.textContent = currCell.minesAroundCount || '0'
+
     }
 
 }
 
 function gameOverMine() {
+
     gGame.isOn = false
     console.log('game over')
     clearInterval(gTimer)
     const smileyButton = document.querySelector('.smiley button')
     smileyButton.textContent = '😢'
+    showMinesOnLoss(gBoard)
+
 }
 
 function checkGameOver() {
@@ -167,23 +171,28 @@ function checkGameOver() {
 
             if (currCell.isMine) {
                 totalMines++
-                if (currCell.isMarked) {
-                    markedMinesCount++
 
-                }
+            }
+
+            if (currCell.isMarked) {
+                markedMinesCount++
+
+
             } else {
                 totalNonMinedCells++
                 if (currCell.isShown) {
+
                     revealedNonMinedCount++
+           
                 }
             }
         }
     }
 
-    if (markedMinesCount === totalMines && revealedNonMinedCount === totalNonMinedCells) {
+    if (markedMinesCount === totalMines || revealedNonMinedCount === totalNonMinedCells) {
         console.log('Congratulations, you won!')
         clearInterval(gTimer)
-        const smileyButton = document.querySelector('button')
+        const smileyButton = document.querySelector('.smiley button')
         smileyButton.textContent = '😎'
         gGame.isOn = false
     }
@@ -191,7 +200,6 @@ function checkGameOver() {
 }
 
 function addMines(minesAmount) {
-    // if(gManuallyMinesMode) return
     for (var i = 0; i < minesAmount; i++) {
         var randomI = getRandomIntInclusive(0, gSize - 1)
         var randomJ = getRandomIntInclusive(0, gSize - 1)
@@ -270,6 +278,8 @@ function applyHintEffect(elCell, i, j) {
                 const neighborCell = gBoard[r][c]
                 const neighborCellElement = document.querySelector(`.cell-${r}-${c}`)
                 elCell.classList.add('clicked')
+                elCell.classList.add('digitx')
+                neighborCellElement.classList.add('digitx')
                 renderCell(neighborCellElement, neighborCell)
 
             }
@@ -302,29 +312,27 @@ function removeHint(elCell, i, j) {
     renderBoard(gBoard)
 }
 
-// function minesPlacing(){
-//     gManuallyMinesMode = true
-//     const elMines = document.querySelector('.mines-placing')
-//     elMines.textContent = `MINES left to placed: x${MINE} ${gManuallyMinesCounter}`
-//     onCellClicked
-    
-// }
+function minesPlacing() {
+    gMinesCounter = gMines
+    const elMines = document.querySelector('.mines-placing')
+    elMines.textContent = `MINES left to placed: x${MINE} ${gManuallyMinesCounter}`
 
-// function addMinesManually(elCell,i,j) {
-    
-//         var currCell = gBoard[i][j]
-//       gBoard[i][j] = {
-//             minesAroundCount: 0,
-//             isShown: false,
-//             isMine: true,
-//             isMarked: false,
-//             cellContent: MINE
-//         }
-//         renderCell(elCell,currCell)
-//         gManuallyMinesCounter--
-//         renderBoard(gBoard)
-//         if(gManuallyMinesCounter<0){
-//             gManuallyMinesMode = false
-//         }
+}
 
-//     }
+
+function showMinesOnLoss(board) {
+
+    for (var i = 0; i < gSize; i++) {
+        for (var j = 0; j < gSize; j++) {
+            {
+                if (board[i][j].cellContent === MINE) {
+                    board[i][j].isShown = true
+                }
+            }
+        }
+    }
+    renderBoard(gBoard)
+}
+
+
+

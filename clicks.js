@@ -1,6 +1,7 @@
 function onClickEasy() {
     gSize = 4
     gMines = 2
+    gLives = 2
     // gManuallyMinesCounter = 2
     gMinesCounter = gMines
     resetGame()
@@ -25,6 +26,7 @@ function handleSmileyButtonClick() {
     resetGame()
 }
 function handleMineClick() {
+    // if(gManuallyMinesMode)return
     gLives--
     gMinesCounter--
     updateMinesUI()
@@ -33,41 +35,39 @@ function handleMineClick() {
         gameOverMine()
     }
 }
-function onCellMarked(elCell, event, i, j) {
-    if (!gGame.isOn) return
-    gGame.markedCount++
-    event.preventDefault()
-    var currCell = gBoard[i][j]
-    if (!currCell.isShown) {
-        currCell.isMarked = !currCell.isMarked
-        currCell.cellContent = currCell.isMarked ? FLAG : ''
-    }
 
-    elCell.innerHTML = currCell.cellContent
+function onCellMarked(elCell, e, i, j) {
+    e.preventDefault()
+
+    if (!gGame.isOn) return
+
+    var currCell = gBoard[i][j]
+
+    if (currCell.isShown) return
+
+    currCell.isMarked = !currCell.isMarked
+    currCell.textContent = FLAG
+
+    elCell.innerHTML = elCell.innerHTML ? null : FLAG
+    renderBoard(gBoard)
     checkGameOver()
 }
+
 function onCellClicked(elCell, i, j) {
 
     if (!gGame.isOn) return
-    // if (gHint)
-        // if(gManuallyMinesMode && gManuallyMinesCounter>0 ){
-        //     for(var m = 0; m < gSize ; m++){ 
-        //         console.log('place mine')
-        //         addMinesManually(elCell,i,j)
-            // }
-                
-        // }
-        if (gFirstClick) {
-            gFirstClick = false
-            gDate = Date.now()
-            gGame.isOn = true
-            gTimer = setInterval(() => {
-                updateTime()
-            }, 1000)
-        }
+
+    if (gFirstClick) {
+        gFirstClick = false
+        gDate = Date.now()
+        gGame.isOn = true
+        gTimer = setInterval(() => {
+            updateTime()
+        }, 1000)
+    }
     var currCell = gBoard[i][j]
     if (elCell.classList.contains('hint-active')) {
-        applyHintEffect(elCell,i,j)
+        applyHintEffect(elCell, i, j)
         return
     }
     currCell.isShown = true
@@ -83,15 +83,16 @@ function onCellClicked(elCell, i, j) {
         expandShown(gBoard, elCell, i, j)
     }
     renderCell(elCell, currCell)
+    renderBoard(gBoard)
     checkGameOver()
 }
 
 
 function onHintClick(timeout = 3000) {
-    if(gHintsAllowed === 0 )return
-    gHintsAllowed --
+    if (gHintsAllowed === 0) return
+    gHintsAllowed--
     gHint = true
-    console.log('Hint activated!')
+   
 
     const cells = document.querySelectorAll('.cell')
     for (var i = 0; i < cells.length; i++) {
@@ -100,7 +101,7 @@ function onHintClick(timeout = 3000) {
 
     setTimeout(() => {
         gHint = false
-        console.log('Hint deactivated!')
+      
 
         for (var i = 0; i < cells.length; i++) {
             cells[i].classList.remove('hint-active')
